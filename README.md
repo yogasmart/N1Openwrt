@@ -6,9 +6,9 @@
 
 
 ## 用户名和密码
-User: root
-Password: Password
-Default IP: 192.168.32.2
+ * User: root
+ * Password: password
+ * Default IP: 192.168.32.2
 
 
 ## app list:
