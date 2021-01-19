@@ -35,14 +35,14 @@ pushd package/community
 #git clone  --depth=1 https://github.com/project-openwrt/luci-app-unblockneteasemusic.git 
 
 # Add luci-app-jd-dailybonus
-git clone --depth=1 https://github.com/jerrykuku/luci-app-jd-dailybonus
+#git clone --depth=1 https://github.com/jerrykuku/luci-app-jd-dailybonus
 
 # Add ServerChan
 git clone --depth=1 https://github.com/tty228/luci-app-serverchan
 
 # Add luci-theme-argon
-git clone --depth=1 -b 18.06 https://github.com/jerrykuku/luci-theme-argon
-rm -rf ../lean/luci-theme-argon
+#git clone --depth=1 -b 18.06 https://github.com/jerrykuku/luci-theme-argon
+#rm -rf ../lean/luci-theme-argon
 popd
 
 # Mod zzz-default-settings
