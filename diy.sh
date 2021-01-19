@@ -21,9 +21,11 @@ echo "iptables -t nat -I POSTROUTING -o eth0 -j MASQUERADE" >> package/network/c
 # Add luci-app-ssr-plus
 pushd package/lean
 git clone --depth=1 https://github.com/fw876/helloworld
-cat > helloworld/luci-app-ssr-plus/root/etc/ssr/black.list << EOF
+cat > helloworld/luci-app-ssr-plus/root/etc/ssrplus/black.list << EOF
 services.googleapis.cn
 googleapis.cn
+heroku.com
+githubusercontent.com 
 EOF
 popd
 
