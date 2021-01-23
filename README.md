@@ -12,6 +12,7 @@
 
 
 ## app list:
+ * UU网游加速器
  * jd-dailybonus
  * ssr+
  * ServerChan
