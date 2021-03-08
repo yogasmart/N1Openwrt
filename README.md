@@ -17,6 +17,7 @@
  * ssr+
  * ServerChan
  * unblockmusic
+ * aria2
  * ddns
  * samba4
  * KMS 
@@ -26,6 +27,7 @@
  * vsftpd
  * usb_printer
  * ipsec-server
+ * zerotier
  * flowoffload
  
 ------
