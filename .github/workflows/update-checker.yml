@@ -10,12 +10,6 @@
 #
 
 name: Update Checker
-
-env:
-  REPO_URL: https://github.com/coolsnowwolf/lede
-  REPO_BRANCH: master
-  REPO_URL2: https://github.com/fw876/helloworld
-  REPO_BRANCH2: master
   
 on:
   workflow_dispatch:
@@ -31,13 +25,15 @@ jobs:
     - name: Get Commit Hash
       id: getHash
       run: |
-        git clone --depth 1 $REPO_URL -b $REPO_BRANCH .
+        git clone --depth 1 https://github.com/coolsnowwolf/lede
+        cd lede
         echo "::set-output name=commitHash::$(git rev-parse HEAD)"
         
     - name: Get helloworld Commit Hash
       id: getHash2
       run: |
-        git clone --depth 1 $REPO_URL2 -b $REPO_BRANCH2 .
+        git clone --depth 1 https://github.com/fw876/helloworld
+        cd helloworld
         echo "::set-output name=commitHash2::$(git rev-parse HEAD)"  
         
     - name: Compare Commit Hash
