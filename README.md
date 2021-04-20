@@ -4,6 +4,8 @@
 
 默认自定义防火墙: iptables -t nat -I POSTROUTING -o eth0 -j MASQUERADE
 
+每三天自动编译一次。
+
 # 如何使用
 1. fork项目
 2. 在secrets中创建RELEASES_TOKEN，一般一次编译要2~4小时，所以要创建一个github发布用的token。
