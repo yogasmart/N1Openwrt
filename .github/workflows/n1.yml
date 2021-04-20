@@ -119,7 +119,7 @@ jobs:
         rm -rf packages
         
     - name: Create release
-      if: env.RELEASE == 'true' && !cancelled()
+      if: steps.compile.outputs.status == 'success' && env.RELEASE == 'true' && !cancelled()
       uses: ncipollo/release-action@v1
       with:
         name: ${{ env.DATE }} 🚀 / N1-Openwrt | 编译
@@ -131,6 +131,14 @@ jobs:
           当前使用版本:（编译前的最后一次源码更新记录）
         artifacts: "${{ env.FIRMWARE }}/*.tar.gz,${{ env.FIRMWARE }}/*.tar.xz"  
 
+    - name: Trigger package
+      if: steps.compile.outputs.status == 'success'
+      uses: peter-evans/repository-dispatch@v1
+      with:
+        token: ${{ secrets.RELEASES_TOKEN  }}
+        repository: mingxiaoyu/N1imagebuilder
+        event-type: Package N1 Image from N1Openwrt
+        
     - name: Upload firmware to cowtransfer
       id: cowtransfer
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_COWTRANSFER == 'true' && !cancelled()
