@@ -45,12 +45,12 @@ jobs:
       uses: actions/cache@v2
       with:
         path: .commitHash
-        key: HEAD-${{ steps.getHash.outputs.commitHash + steps.getHash2.outputs.commitHash2 }}
+        key: HEAD-${{ steps.getHash.outputs.commitHash }}-${{ steps.getHash2.outputs.commitHash2 }}
 
     - name: Save New Commit Hash
       if: steps.cacheHash.outputs.cache-hit != 'true'
       run: |
-        echo ${{ steps.getHash.outputs.commitHash + steps.getHash2.outputs.commitHash2 }} | tee .commitHash
+        echo ${{ steps.getHash.outputs.commitHash}} - ${{ steps.getHash2.outputs.commitHash2 }} | tee .commitHash
         
     - name: Trigger build
       if: steps.cacheHash.outputs.cache-hit != 'true'
