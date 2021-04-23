@@ -42,6 +42,10 @@ git clone --depth=1 https://github.com/tty228/luci-app-serverchan
 # Add OpenClash
 git clone --depth=1 https://github.com/vernesong/OpenClash
 
+# Docker
+git clone --depth=1 https://github.com/lisaac/luci-lib-docker
+git clone --depth=1 https://github.com/lisaac/luci-app-dockerman
+
 # Add luci-theme-argon
 #git clone --depth=1 -b 18.06 https://github.com/jerrykuku/luci-theme-argon
 #rm -rf ../lean/luci-theme-argon
