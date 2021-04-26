@@ -37,6 +37,7 @@
  * flowoffload
  * WIFI
  
+ ![applist](https://github.com/mingxiaoyu/N1Openwrt/blob/main/imgs/mini.PNG?raw=true)
 ------
  # 感激 
  [P3TERX](https://github.com/P3TERX/Actions-OpenWrt)提供的脚本参考
