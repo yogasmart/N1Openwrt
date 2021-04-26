@@ -88,6 +88,7 @@ jobs:
         make package/compile -j$(nproc) IGNORE_ERRORS=1 || make package/compile -j1 V=s IGNORE_ERRORS=1
         make package/index
         echo "::set-output name=status::success"
+        
     - name: Generate Firmware
       if: steps.compile.outputs.status == 'success'
       id: generate
@@ -112,12 +113,12 @@ jobs:
         cd openwrt/bin/targets/*/*
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         
-    - name: Delete IPK
-      if: env.DELETE_IPK == 'true' && !cancelled()
-      run: |
-        cd openwrt/bin/targets/*/*
-        rm -rf packages
-        
+    #- name: Delete IPK
+    #  if: env.DELETE_IPK == 'true' && !cancelled()
+    #  run: |
+    #    cd openwrt/bin/targets/*/*
+    #    rm -rf packages
+     
     - name: Create release
       if: steps.compile.outputs.status == 'success' && env.RELEASE == 'true' && !cancelled()
       uses: ncipollo/release-action@v1
@@ -130,6 +131,14 @@ jobs:
         body: |
           当前使用版本:（编译前的最后一次源码更新记录）
         artifacts: "${{ env.FIRMWARE }}/*.tar.gz,${{ env.FIRMWARE }}/*.tar.xz"  
+        
+    - name: GDQ
+      run: |
+        rm -rf openwrt/.config
+        mv gdq.config openwrt/.config
+        
+        cd openwrt
+        make -j$(nproc) || make -j1 || make -j1 V=s
 
     - name: Trigger package
       if: steps.compile.outputs.status == 'success'
