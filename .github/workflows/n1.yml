@@ -138,11 +138,20 @@ jobs:
         mv openwrt/.config openwrt/.config.old
         mv gdq.config openwrt/.config
         cd openwrt
+        make diffconfig
         make download -j8
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
-        make package/compile -j$(nproc) IGNORE_ERRORS=1 || make package/compile -j1 V=s IGNORE_ERRORS=1
+        #make -j$(nproc) || make -j1 || make -j1 V=s
         echo "---"
+        make tools/compile -j$(nproc) || make tools/compile -j1 V=s
+        echo "--tools--"
+        make toolchain/compile -j$(nproc) || make toolchain/compile -j1 V=s
+        echo "--toolchain--"
+        make target/compile -j$(nproc) || make target/compile -j1 V=s IGNORE_ERRORS=1
+        echo "--target--"
+        make package/compile -j$(nproc) IGNORE_ERRORS=1 || make package/compile -j1 V=s IGNORE_ERRORS=1
+        echo "--package--"
         make package/index
         echo "---"
         make package/install -j$(nproc) || make package/install -j1 V=s
