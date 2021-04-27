@@ -139,7 +139,9 @@ jobs:
         mv gdq.config openwrt/.config
         echo "---"
         cd openwrt
-        ls  -a
+        make download -j8
+        find dl -size -1024c -exec ls -l {} \;
+        find dl -size -1024c -exec rm -f {} \;
         make -j$(nproc) || make -j1 || make -j1 V=s
 
     - name: Trigger package
