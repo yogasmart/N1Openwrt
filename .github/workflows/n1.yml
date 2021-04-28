@@ -115,7 +115,7 @@ jobs:
       run: |
         rm -rf openwrt/.config.old
         mv -f openwrt/.config openwrt/.config.old
-        mv -f plus.config openwrt/.config
+        mv -f max.config openwrt/.config
         cd openwrt
         make diffconfig
         make -j$(nproc) || make -j1 || make -j1 V=s
