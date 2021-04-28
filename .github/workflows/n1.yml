@@ -53,7 +53,9 @@ jobs:
         cd openwrt
         
         sudo mkdir -p upload
+        sudo chown $USER:$GROUPS upload
         cd upload
+        mkdir test
         echo "UPLOAD=$PWD" >> $GITHUB_ENV
         
     - name: Update & Install Feeds
