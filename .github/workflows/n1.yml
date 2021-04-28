@@ -15,7 +15,7 @@ on:
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
-  CONFIG_FILE: ni.config
+  CONFIG_FILE: mini.config
   DIY_SH: diy.sh
   UPLOAD_COWTRANSFER: true
   TZ: Asia/Shanghai
@@ -125,7 +125,16 @@ jobs:
         body: |
           当前使用版本:（编译前的最后一次源码更新记录）
         artifacts: "${{ env.FIRMWARE }}/*.tar.gz,${{ env.FIRMWARE }}/*.tar.xz" 
-
+        
+    - name: GDQ
+      run: |
+        rm -rf openwrt/.config.old
+        mv -f openwrt/.config openwrt/.config.old
+        mv -f max.config openwrt/.config
+        cd openwrt
+        make diffconfig
+        make -j$(nproc) || make -j1 || make -j1 V=s
+        
     - name: Trigger package
       if: steps.compile.outputs.status == 'success'
       uses: peter-evans/repository-dispatch@v1
