@@ -79,7 +79,7 @@ jobs:
         [ -e $MINI_CONFIG_FILE ] && mv -f $MINI_CONFIG_FILE openwrt/.config
         
         cd openwrt
-        ake defconfig
+        make defconfig
         make download -j8
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
