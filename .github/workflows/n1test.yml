@@ -73,7 +73,7 @@ jobs:
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_SH   
         
-     - name: Mini Compile Firmware
+    - name: Mini Compile Firmware
       id: minicompile   
       run: |
         [ -e $MINI_CONFIG_FILE ] && mv -f $MINI_CONFIG_FILE openwrt/.config
