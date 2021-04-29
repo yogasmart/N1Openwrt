@@ -37,7 +37,7 @@ jobs:
         sudo mkdir -p /upload
         sudo chown $USER:$GROUPS /upload
         
-        cd upload
+        cd /upload
         echo "UPLOAD=$PWD" >> $GITHUB_ENV
         
     - name: Clone source code
