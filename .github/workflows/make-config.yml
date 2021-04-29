@@ -68,7 +68,7 @@ jobs:
         mv -f $CONFIG_FILE openwrt/.config
         
         cd openwrt
-        ls
+        ls -a
         make defconfig
         
         cp .config ${UPLOAD}/build.config

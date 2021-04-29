@@ -15,7 +15,7 @@ on:
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
-  CONFIG_FILE: mini.config
+  CONFIG_FILE: plus.config
   DIY_SH: diy.sh
   UPLOAD_COWTRANSFER: true
   TZ: Asia/Shanghai
@@ -83,7 +83,7 @@ jobs:
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
         
-    - name: Mini Compile Firmware
+    - name: Plus Compile Firmware
       id: compile
       run: |
         cd openwrt
@@ -98,8 +98,8 @@ jobs:
     - name: Organize files
       if: steps.compile.outputs.status == 'success'
       run: |
-        cp openwrt/.config ${UPLOAD}/mini.config
-        cp openwrt/bin/targets/armvirt/64/openwrt-armvirt-64-default-rootfs.tar.gz  ${UPLOAD}/openwrt-armvirt-64-default-rootfs-mini.tar.gz
+        cp openwrt/.config ${UPLOAD}/plus.config
+        cp openwrt/bin/targets/armvirt/64/openwrt-armvirt-64-default-rootfs.tar.gz  ${UPLOAD}/openwrt-armvirt-64-default-rootfs-plus.tar.gz
         
         #rm -rf openwrt/bin/targets/armvirt/64/openwrt-armvirt-64-default.manifest
         #rm -rf openwrt/bin/targets/armvirt/64/openwrt-armvirt-64-Image
@@ -109,19 +109,19 @@ jobs:
         #cd openwrt/bin/targets/*/*
         #echo "FIRMWARE=$PWD" >> $GITHUB_ENV
 
-    - name: Plus Compile Firmware
+    - name: Mini Compile Firmware
       id: pluscompile   
       run: |
         rm -rf openwrt/.config.old
         mv -f openwrt/.config openwrt/.config.old
-        mv -f max.config openwrt/.config
+        mv -f mini.config openwrt/.config
         cd openwrt
-        make diffconfig
+        make defconfig
         make -j$(nproc) || make -j1 || make -j1 V=s
         
-        cp .config ${UPLOAD}/plus.config
+        cp .config ${UPLOAD}/mini.config
         cd openwrt/bin/targets/*/*
-        cp openwrt-armvirt-64-default-rootfs.tar.gz  ${UPLOAD}/openwrt-armvirt-64-default-rootfs-plus.tar.gz
+        cp openwrt-armvirt-64-default-rootfs.tar.gz  ${UPLOAD}/openwrt-armvirt-64-default-rootfs-mini.tar.gz
         cp -r *.xz ${UPLOAD}/
         
     - name: Create release
