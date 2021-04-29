@@ -15,7 +15,8 @@ on:
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
-  CONFIG_FILE: plus.config
+  PLUS_CONFIG_FILE: plus.config
+  MINI_CONFIG_FILE: mini.config
   DIY_SH: diy.sh
   UPLOAD_COWTRANSFER: true
   TZ: Asia/Shanghai
@@ -69,7 +70,6 @@ jobs:
     - name: Load Custom Configuration
       run: |
         [ -e files ] && mv files openwrt/files
-        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
         chmod +x $DIY_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_SH        
@@ -84,37 +84,39 @@ jobs:
         find dl -size -1024c -exec rm -f {} \;
         
     - name: Plus Compile Firmware
-      id: compile
+      id: pluscompile
       run: |
+        [ -e $PLUS_CONFIG_FILE ] && mv $PLUS_CONFIG_FILE openwrt/.config
         cd openwrt
         echo -e "$(nproc) thread compile"
         
         make -j$(nproc) || make -j1 || make -j1 V=s
         
-        grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
-        [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)"   >> $GITHUB_ENV
+        cp .config ${UPLOAD}/plus.config
+        cd openwrt/bin/targets/*/*
+        cp openwrt-armvirt-64-default-rootfs.tar.gz  ${UPLOAD}/openwrt-armvirt-64-default-rootfs-plus.tar.gz
+        
         echo "::set-output name=status::success"       
 
-    - name: Organize files
-      if: steps.compile.outputs.status == 'success'
-      run: |
-        cp openwrt/.config ${UPLOAD}/plus.config
-        cp openwrt/bin/targets/armvirt/64/openwrt-armvirt-64-default-rootfs.tar.gz  ${UPLOAD}/openwrt-armvirt-64-default-rootfs-plus.tar.gz
-        
-        #rm -rf openwrt/bin/targets/armvirt/64/openwrt-armvirt-64-default.manifest
-        #rm -rf openwrt/bin/targets/armvirt/64/openwrt-armvirt-64-Image
-        #rm -rf openwrt/bin/targets/armvirt/64/openwrt-armvirt-64-Image-initramfs
-        #rm -rf openwrt/bin/targets/armvirt/64/openwrt-armvirt-64-root.squashfs.gz
-        #rm -rf openwrt/bin/targets/armvirt/64/openwrt-armvirt-64-rootfs.cpio.gz   
-        #cd openwrt/bin/targets/*/*
-        #echo "FIRMWARE=$PWD" >> $GITHUB_ENV
+    #- name: Organize files
+    #  if: steps.compile.outputs.status == 'success'
+    #  run: |   
+    #    #rm -rf openwrt/bin/targets/armvirt/64/openwrt-armvirt-64-default.manifest
+    #    #rm -rf openwrt/bin/targets/armvirt/64/openwrt-armvirt-64-Image
+    #    #rm -rf openwrt/bin/targets/armvirt/64/openwrt-armvirt-64-Image-initramfs
+    #    #rm -rf openwrt/bin/targets/armvirt/64/openwrt-armvirt-64-root.squashfs.gz
+    #    #rm -rf openwrt/bin/targets/armvirt/64/openwrt-armvirt-64-rootfs.cpio.gz   
+    #    #cd openwrt/bin/targets/*/*
+    #    #echo "FIRMWARE=$PWD" >> $GITHUB_ENV
 
     - name: Mini Compile Firmware
-      id: pluscompile   
+      id: minicompile   
       run: |
         rm -rf openwrt/.config.old
         mv -f openwrt/.config openwrt/.config.old
-        mv -f mini.config openwrt/.config
+        
+        [ -e $MINI_CONFIG_FILE ] && mv -f $MINI_CONFIG_FILE openwrt/.config
+        
         cd openwrt
         make defconfig
         make -j$(nproc) || make -j1 || make -j1 V=s
@@ -125,7 +127,7 @@ jobs:
         cp -r *.xz ${UPLOAD}/
         
     - name: Create release
-      if: steps.compile.outputs.status == 'success' && steps.pluscompile.outputs.status == 'success' && env.RELEASE == 'true' && !cancelled()
+      if: steps.minicompile.outputs.status == 'success' && steps.pluscompile.outputs.status == 'success' && env.RELEASE == 'true' && !cancelled()
       uses: ncipollo/release-action@v1
       with:
         name: ${{ env.DATE }} 🚀 / N1-Openwrt | 编译
@@ -138,7 +140,7 @@ jobs:
         artifacts:  ${{ env.UPLOAD }}/*
         
     - name: Trigger package
-      if: steps.compile.outputs.status == 'success' && steps.pluscompile.outputs.status == 'success'
+      if: steps.minicompile.outputs.status == 'success' && steps.pluscompile.outputs.status == 'success'
       uses: peter-evans/repository-dispatch@v1
       with:
         token: ${{ secrets.RELEASES_TOKEN  }}
