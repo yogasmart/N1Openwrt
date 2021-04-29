@@ -65,7 +65,7 @@ jobs:
       run: |
         cd openwrt
         make defconfig    
-        cp openwrt/.config ${UPLOAD}/build.config
+        cp .config ${UPLOAD}/build.config
 
     - name: Upload Config
       uses: actions/upload-artifact@master
