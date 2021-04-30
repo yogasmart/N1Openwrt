@@ -1,0 +1,28 @@
+#=================================================
+# Description: Build Phicomm N1 OpenWrt using GitHub Actions
+# Lisence: MIT
+# Author: mingxiaoyu
+#=================================================
+
+name: N1 Multiple  Version
+
+on:
+  repository_dispatch:
+  workflow_dispatch:
+
+jobs:
+  tagnamgjob:
+    runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.setuptag.outputs.tagnamg }}
+
+    steps:
+    - id: setuptag
+      run:  echo "::set-output name=tagnamg::$(date +%Y%m%d)"
+ 
+  buildopenwrtjob:
+    runs-on: ubuntu-18.04
+    needs: tagnamgjob    
+    steps:
+    - run: echo ${{needs.tagnamgjob.outputs.tagnamg}}
+    
