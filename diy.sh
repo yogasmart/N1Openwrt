@@ -72,6 +72,6 @@ sed -i "/commit luci/i\uci set luci.main.mediaurlbase='/luci-static/argon'" pack
 
 # Openwrt version
 sed -i '/DISTRIB_REVISION/d' package/lean/default-settings/files/zzz-default-settings
-echo "echo \"DISTRIB_REVISION='R$(TZ=UTC-8 date "+%Y.%m.%d")  Compilde by mingxiaoyu'\" >> /etc/openwrt_release" >> package/lean/default-settings/files/zzz-default-settings
+echo "echo \"DISTRIB_REVISION='R21.4.18 $(TZ=UTC-8 date "+%Y.%m.%d")  Compilde by mingxiaoyu'\" >> /etc/openwrt_release" >> package/lean/default-settings/files/zzz-default-settings
 sed -i '/exit 0/d' package/lean/default-settings/files/zzz-default-settings
 echo "exit 0" >> package/lean/default-settings/files/zzz-default-settings
