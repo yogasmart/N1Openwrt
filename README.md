@@ -14,6 +14,8 @@ N1Openwrt仅仅编译为OpenWrt，不能直接为N1所用。必须通过N1imageb
 1. fork项目
 2. 在secrets中创建RELEASES_TOKEN，一般一次编译要2~4小时，所以要创建一个github发布用的token。
 3. 点击Actions -> Workflows -> Run workflow -> Run workflow
+4. 编译多版本，可以直接用。
+5. 如果只编译单个，可以复制single.yml到.github/workflows 然后简单修改。
 
 ## 用户名和密码
  * User: root
