@@ -38,7 +38,6 @@ N1Openwrt仅仅编译为OpenWrt，不能直接为N1所用。必须通过N1imageb
  * cifs(挂载 SMB/CIFS 网络共享文件夹)
  * vsftpd
  * usb_printer
- * ipsec-server
  * zerotier
  * flowoffload
  * WIFI
