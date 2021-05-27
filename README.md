@@ -1,7 +1,6 @@
 ![N1](https://github.com/mingxiaoyu/N1Openwrt/workflows/N1/badge.svg)
 
-[N1Openwrt](https://github.com/mingxiaoyu/N1Openwrt)和[N1imagebuilder](https://github.com/mingxiaoyu/N1imagebuilder)是关联项目。
-N1Openwrt仅仅编译为OpenWrt，不能直接为N1所用。必须通过N1imagebuilder打包成img
+N1 OpenWrt.
 
 # 喜欢的可以给个star。要自己编译独一无二的可以fork。如果有人要贝壳云等其他的，可以提issue。我就加上去。再次感谢各位。
 
