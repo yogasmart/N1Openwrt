@@ -21,6 +21,8 @@ on:
 #  schedule:
 #    - cron: 0 3 */3 * *
 
+env:
+    MULTIPLE_BUILD: true
 jobs:
   check:
     runs-on: ubuntu-latest
@@ -53,13 +55,20 @@ jobs:
       run: |
         echo ${{ steps.getHash.outputs.commitHash}}-${{ steps.getHash2.outputs.commitHash2 }} | tee .commitHash
         
-    - name: Trigger build
-      if: steps.cacheHash.outputs.cache-hit != 'true' || (github.event.inputs.update == 'true' && github.event.inputs.update  != 'false') 
+    - name: Trigger multiple build
+      if: env.MULTIPLE_BUILD == 'true' && (steps.cacheHash.outputs.cache-hit != 'true' || (github.event.inputs.update == 'true' && github.event.inputs.update  != 'false'))
       uses: peter-evans/repository-dispatch@v1
       with:
         token: ${{ secrets.RELEASES_TOKEN  }}
-        event-type: Source Code Update
-
+        event-type: multiple
+        
+    - name: Trigger single build
+      if: env.MULTIPLE_BUILD != 'true' && (steps.cacheHash.outputs.cache-hit != 'true' || (github.event.inputs.update == 'true' && github.event.inputs.update  != 'false')) 
+      uses: peter-evans/repository-dispatch@v1
+      with:
+        token: ${{ secrets.RELEASES_TOKEN  }}
+        event-type: single
+        
     - name: Delete workflow runs
       uses: GitRML/delete-workflow-runs@main
       with:
