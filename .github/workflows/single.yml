@@ -100,7 +100,7 @@ jobs:
         openwrt-path: $GITHUB_WORKSPACE/openwrt/bin/targets/*/*
    
     - name: Create release
-      if: steps.minicompile.outputs.status == 'success' && steps.pluscompile.outputs.status == 'success' && env.RELEASE == 'true' && !cancelled()
+      if: steps.compile.outputs.status == 'success' && env.RELEASE == 'true' && !cancelled()
       uses: ncipollo/release-action@v1
       with:
         name: ${{ env.DATE }} 🚀 / N1-Openwrt | 编译
@@ -111,14 +111,6 @@ jobs:
         body: |
           当前使用版本:（编译前的最后一次源码更新记录）
         artifacts:  ${{ env.UPLOAD }}/*
-        
-    - name: Trigger package
-      if: steps.minicompile.outputs.status == 'success' && steps.pluscompile.outputs.status == 'success'
-      uses: peter-evans/repository-dispatch@v1
-      with:
-        token: ${{ secrets.RELEASES_TOKEN  }}
-        repository: mingxiaoyu/N1imagebuilder
-        event-type: Package N1 Image from N1Openwrt
         
     - name: Remove old Releases
       uses: dev-drprasad/delete-older-releases@v0.1.0
