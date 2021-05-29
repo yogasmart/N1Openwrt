@@ -60,11 +60,11 @@ jobs:
       if:  env.RELEASE == 'true' && !cancelled()
       uses: ncipollo/release-action@v1
       with:
-        name: ${{ env.DATE }} / N1-Openwrt-img | 编译
+        name: ${{ env.DATE }} / N1-Openwrt | 编译
         allowUpdates: true
         tag: ${{ env.version }}
-        commit: main
-        token: ${{ secrets.GITHUB_TOKEN   }}
+        commit: master
+        token: ${{ secrets.RELEASES_TOKEN   }}
         body: |
           默认IP：192.168.31.2 默认密码： password
           全新刷入emmc方法：
