@@ -111,6 +111,8 @@ jobs:
       uses: doctor-design/package-flippy-openwrt@main
       with:
         types: s905d
+        openwrt-version: R21.6.1
+        whoami: doctor
         out: ${{ env.UPLOAD }}
         sub-name: ${{ env.SUB_VERSION}}
         openwrt-path: $GITHUB_WORKSPACE/openwrt/bin/targets/*/*
