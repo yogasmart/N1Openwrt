@@ -10,7 +10,5 @@ N1打包学习测试，请不要使用。
 6. Update Checker, 上游更新则编译。MULTIPLE_BUILD: true **编译mini和plus多版本编译**  false，**只编译mini**
 
 # 感谢
- * [flippy](https://www.right.com.cn/forum/space-uid-285101.html)
- * [coolsnowwolf/Lede](https://github.com/coolsnowwolf/lede)
  * [mingxiaoyu](https://github.com/mingxiaoyu/N1Openwrt)
- * [hibuddies](https://github.com/hibuddies/openwrt/)
+ * [P3TERX](https://github.com/P3TERX/Actions-OpenWrt)
