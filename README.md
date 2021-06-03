@@ -11,4 +11,4 @@ N1打包学习测试，请不要使用。
 
 # 感谢
  * [mingxiaoyu](https://github.com/mingxiaoyu/N1Openwrt)
- * [P3TERX](https://github.com/P3TERX/Actions-OpenWrt)
+ * [P3TERX](https://github.com/P3TERX/Actions-OpenWrt)提供的脚本参考
