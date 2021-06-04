@@ -138,7 +138,7 @@ jobs:
              2. cd root
              3. ./install-to-emmc.sh
              4. 拔掉U盘，断电重启。             
-        artifacts:  ${{ env.UPLOAD }}/*
+        artifacts: “${{ env.UPLOAD }}/*”
 
   cleanjob:
     runs-on: ubuntu-latest
