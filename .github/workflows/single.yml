@@ -104,7 +104,7 @@ jobs:
         cd bin/targets/*/*
         cp openwrt-armvirt-64-default-rootfs.tar.gz  ${UPLOAD}/openwrt-armvirt-64-default-rootfs.tar.gz
         count=` find -name '*.xz' | wc -l `
-        if [  $count -gt 0 ] ; then
+        if [ $count -gt 0 ] ; then
             cp -r *.xz ${UPLOAD}/
         fi
         echo "::set-output name=status::success"       
