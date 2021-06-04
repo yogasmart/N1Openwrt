@@ -108,7 +108,6 @@ jobs:
         if [ $count -gt 0 ] ; then
            cp -r *.xz ${UPLOAD}/
         fi
-        #cp -r *.xz ${UPLOAD}/
         echo "::set-output name=status::success" 
 
     - name: Package OpenWrt with flippy script 用flippy脚本打包
