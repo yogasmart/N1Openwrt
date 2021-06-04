@@ -47,7 +47,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@main
     
-    - name: Initialization Environment
+    - name: Initialization Environment I 初始化编译环境I
       run: |
         sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
         sudo -E apt-get -qq update
@@ -67,7 +67,7 @@ jobs:
         
         echo "tag_name=${{needs.tagnamgjob.outputs.tagnamgoutput}}" >> $GITHUB_ENV
    
-    - name: Initialization Environment
+    - name: Initialization Environment II 初始化编译环境II
       working-directory: /workdir
       run: |
         df -hT $PWD
@@ -75,13 +75,13 @@ jobs:
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt 
         cd openwrt 
         
-    - name: Update & Install Feeds
+    - name: Update & Install Feeds 下载、安装插件
       run: |
         cd openwrt
         ./scripts/feeds update -a
         ./scripts/feeds install -a
         
-    - name: Load Custom Configuration
+    - name: Load Custom Configuration 加载自定义设置
       run: |
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
         [ -e files ] && mv files openwrt/files
@@ -89,7 +89,7 @@ jobs:
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_SH 
 
-    - name: Compile Firmware
+    - name: Compile Firmware 编译固件
       id: compile
       run: |
         cd openwrt
@@ -107,7 +107,7 @@ jobs:
         cp -r *.xz ${UPLOAD}/
         echo "::set-output name=status::success" 
 
-    - name: Package OpenWrt with flippy script
+    - name: Package OpenWrt with flippy script 用flippy脚本打包
       uses: doctor-design/package-flippy-openwrt@main
       with:
         types: s905d
@@ -117,7 +117,7 @@ jobs:
         sub-name: ${{ env.SUB_VERSION}}
         openwrt-path: $GITHUB_WORKSPACE/openwrt/bin/targets/*/*
         
-    - name: Create release
+    - name: Create release 创建release标签
       if: steps.compile.outputs.status == 'success' && env.RELEASE == 'true' && !cancelled()
       uses: ncipollo/release-action@v1
       with:
@@ -127,14 +127,19 @@ jobs:
         commit: master
         token: ${{ secrets.RELEASES_TOKEN  }}
         body: |
-          当前使用版本:（编译前的最后一次源码更新记录）
+          默认IP：192.168.2.5 默认密码： password
+          全新刷入emmc方法：
+             1. 固件刷入U盘。
+             2. cd root
+             3. ./install-to-emmc.sh
+             4. 拔掉U盘，断电重启。             
         artifacts:  ${{ env.UPLOAD }}/*
 
   cleanjob:
     runs-on: ubuntu-latest
     needs: buildopenwrtjob
     steps:      
-    - name: Remove old Releases
+    - name: Remove old Releases 删除旧版 Releases
       uses: dev-drprasad/delete-older-releases@v0.1.0
       if: env.RELEASE == 'true' && !cancelled()
       with:
