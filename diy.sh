@@ -22,7 +22,14 @@ git clone https://github.com/jerrykuku/luci-app-ttnode.git package/luci-app-ttno
 git clone https://github.com/jerrykuku/lua-maxminddb.git package/lua-maxminddb
 git clone https://github.com/jerrykuku/luci-app-vssr.git package/luci-app-vssr
 git clone https://github.com/kongfl888/luci-app-adguardhome.git package/luci-app-adguardhome
-git clone https://github.com/lisaac/luci-app-dockerman.git package/luci-app-dockerman
+#git clone https://github.com/lisaac/luci-app-dockerman.git package/luci-app-dockerman
+# Docker
+svn co https://github.com/lisaac/luci-app-dockerman/trunk/applications/luci-app-dockerman package/luci-app-dockerman
+git clone --depth=1 https://github.com/lisaac/luci-lib-docker
+if [ -e feeds/packages/utils/docker-ce ];then
+	sed -i '/dockerd/d' package/luci-app-dockerman/Makefile
+	sed -i 's/+docker/+docker-ce/g' package/luci-app-dockerman/Makefile
+fi
 git clone https://github.com/rufengsuixing/luci-app-autoipsetadder.git package/luci-app-autoipsetadder
 git clone https://github.com/mchome/openwrt-dogcom.git package/openwrt-dogcom
 git clone https://github.com/garypang13/luci-app-bypass package/luci-app-bypass
