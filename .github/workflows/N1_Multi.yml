@@ -80,6 +80,8 @@ jobs:
     - name: Update & Install Feeds 下载、安装插件
       run: |
         cd openwrt
+        useVersionInfo=$(git show -s --date=short --format="Author: %an<br/>date: %cd<br/>commit: %s<br/>commit hash: %H")
+        echo "useVersionInfo=$useVersionInfo" >> $GITHUB_ENV
         ./scripts/feeds update -a
         ./scripts/feeds install -a
         
