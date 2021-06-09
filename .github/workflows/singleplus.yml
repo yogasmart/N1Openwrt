@@ -10,7 +10,7 @@ name: N1 Single_Plus Version
 
 on:
   repository_dispatch:
-    types: [single]
+    types: [single_puls]
   workflow_dispatch:
     inputs:
       ssh:
