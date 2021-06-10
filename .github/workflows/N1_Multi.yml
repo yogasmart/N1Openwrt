@@ -122,7 +122,8 @@ jobs:
         whoami: doctor
         out: ${{ env.UPLOAD }}
         sub-name: ${{ env.SUB_VERSION}}
-        openwrt-path: $GITHUB_WORKSPACE/openwrt/bin/targets/*/*
+#       openwrt-path: $GITHUB_WORKSPACE/openwrt/bin/targets/*/*
+        openwrt-path: openwrt/bin/targets/*/*
         
     - name: Create release 创建release标签
       if: steps.compile.outputs.status == 'success' && env.RELEASE == 'true' && !cancelled()
