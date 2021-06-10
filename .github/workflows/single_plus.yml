@@ -24,8 +24,8 @@ on:
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
-  SUB_VERSION: plus
-  CONFIG_FILE: $SUB_VERSION.config
+#  SUB_VERSION: plus
+  CONFIG_FILE: plus.config
   DIY_SH: diy.sh
   TZ: Asia/Shanghai
   RELEASE: true
