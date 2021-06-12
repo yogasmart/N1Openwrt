@@ -114,19 +114,31 @@ jobs:
         fi
         echo "::set-output name=status::success" 
 
+    - name: Create Firmware release
+      if: steps.compile.outputs.status == 'success' && env.RELEASE == 'true' && !cancelled()
+      uses: ncipollo/release-action@v1
+      with:
+        name: ${{ env.DATE }} 🚀 / N1-Openwrt | 编译
+        allowUpdates: true
+        tag: ${{ env.tag_name }}
+        commit: master
+        token: ${{ secrets.RELEASES_TOKEN  }}
+        artifacts:  ${{ env.UPLOAD }}/*
+        
     - name: Package OpenWrt with flippy script 打包
       uses: doctor-design/package-flippy-openwrt@main
+      id: package
       with:
         types: s905d
         openwrt-version: R21.6.1
         whoami: doctor
         out: ${{ env.UPLOAD }}
         sub-name: ${{ env.SUB_VERSION}}
-#       openwrt-path: $GITHUB_WORKSPACE/openwrt/bin/targets/*/*
-        openwrt-path: openwrt/bin/targets/*/*
+        openwrt-path: $GITHUB_WORKSPACE/openwrt/bin/targets/*/*
+#        openwrt-path: openwrt/bin/targets/*/*
         
-    - name: Create release
-      if: steps.compile.outputs.status == 'success' && env.RELEASE == 'true' && !cancelled()
+    - name: Create Release
+      if: steps.package.outputs.status  == 'true' && env.RELEASE == 'true' && !cancelled()
       uses: ncipollo/release-action@v1
       with:
         name: ${{ env.DATE }} 🚀 / N1-Openwrt | 编译
@@ -141,6 +153,14 @@ jobs:
              2. cd root
              3. ./install-to-emmc.sh
              4. 拔掉U盘，断电重启。
+             
+          在线升级方法：
+             1. 上传 img 到/mnt/mmcblk2p4
+             2. cd /mnt/mmcblk2p4
+             3. 升级脚本下载 update-amlogic-openwrt.sh
+             4. chmod +x update-amlogic-openwrt.sh
+             5. gzip -d  *.img.gz
+             6. ./update-amlogic-openwrt.sh xxxx.img
           ${{ env.useVersionInfo }}
         artifacts:  ${{ env.UPLOAD }}/*
 
