@@ -26,7 +26,7 @@ git clone https://github.com/kongfl888/luci-app-adguardhome.git package/luci-app
 #git clone https://github.com/lisaac/luci-app-dockerman.git package/luci-app-dockerman
 # Docker
 svn co https://github.com/lisaac/luci-app-dockerman/trunk/applications/luci-app-dockerman package/luci-app-dockerman
-git clone --depth=1 https://github.com/lisaac/luci-lib-docker.git package/luci-lib-docker
+git clone --depth=1 https://github.com/lisaac/luci-lib-docker package/luci-lib-docker
 if [ -e feeds/packages/utils/docker-ce ];then
 	sed -i '/dockerd/d' package/luci-app-dockerman/Makefile
 	sed -i 's/+docker/+docker-ce/g' package/luci-app-dockerman/Makefile
