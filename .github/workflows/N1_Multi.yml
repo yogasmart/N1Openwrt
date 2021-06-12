@@ -114,7 +114,7 @@ jobs:
         fi
         echo "::set-output name=status::success" 
 
-    - name: Create Firmware release
+    - name: Create Firmware Release
       if: steps.compile.outputs.status == 'success' && env.RELEASE == 'true' && !cancelled()
       uses: ncipollo/release-action@v1
       with:
@@ -125,7 +125,7 @@ jobs:
         token: ${{ secrets.RELEASES_TOKEN  }}
         artifacts:  ${{ env.UPLOAD }}/*
         
-    - name: Package OpenWrt with flippy script 打包
+    - name: Package OpenWrt with flippy script
       uses: doctor-design/package-flippy-openwrt@main
       id: package
       with:
@@ -135,7 +135,7 @@ jobs:
         out: ${{ env.UPLOAD }}
         sub-name: ${{ env.SUB_VERSION}}
         openwrt-path: $GITHUB_WORKSPACE/openwrt/bin/targets/*/*
-#        openwrt-path: openwrt/bin/targets/*/*
+#       openwrt-path: openwrt/bin/targets/*/*
         
     - name: Create Release
       if: steps.package.outputs.status  == 'true' && env.RELEASE == 'true' && !cancelled()
