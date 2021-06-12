@@ -132,7 +132,5 @@ cat package/lean/luci-app-cpufreq/Makefile
 sed -i 's/entry({"admin", "services", "cpufreq"}, cbi("cpufreq"), _("CPU Freq"), 900).dependent = false/entry({"admin", "system", "cpufreq"}, cbi("cpufreq"), _("CPU Freq"), 9).dependent = false/g' package/lean/luci-app-cpufreq/luasrc/controller/cpufreq.lua
 cat package/lean/luci-app-cpufreq/luasrc/controller/cpufreq.lua
 
-find package/luci-app-bypass/* -maxdepth 8 -path "*" | xargs -i sed -i 's/smartdns-le/smartdns/g' {}
-
 ./scripts/feeds update -a
 ./scripts/feeds install -a
