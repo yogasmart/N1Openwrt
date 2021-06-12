@@ -9,12 +9,12 @@
 #============================================================
 
 # Modify default IP
-#sed -i 's/192.168.1.1/192.168.50.5/g' package/base-files/files/bin/config_generate
+sed -i 's/192.168.1.1/192.168.2.5/g' package/base-files/files/bin/config_generate
 #移除不用软件包
 rm -rf package/lean/luci-app-dockerman
 rm -rf package/lean/luci-app-wrtbwmon
 rm -rf package/lean/luci-theme-argon
-#rm -rf package/v2ray-plugin
+rm -rf package/lean/luci-lib-docker
 #添加额外软件包
 git clone https://github.com/destan19/OpenAppFilter.git package/OpenAppFilter
 git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git package/luci-app-jd-dailybonus
@@ -22,6 +22,7 @@ git clone https://github.com/jerrykuku/luci-app-ttnode.git package/luci-app-ttno
 git clone https://github.com/jerrykuku/lua-maxminddb.git package/lua-maxminddb
 git clone https://github.com/jerrykuku/luci-app-vssr.git package/luci-app-vssr
 git clone https://github.com/kongfl888/luci-app-adguardhome.git package/luci-app-adguardhome
+
 #git clone https://github.com/lisaac/luci-app-dockerman.git package/luci-app-dockerman
 # Docker
 svn co https://github.com/lisaac/luci-app-dockerman/trunk/applications/luci-app-dockerman package/luci-app-dockerman
@@ -30,6 +31,7 @@ if [ -e feeds/packages/utils/docker-ce ];then
 	sed -i '/dockerd/d' package/luci-app-dockerman/Makefile
 	sed -i 's/+docker/+docker-ce/g' package/luci-app-dockerman/Makefile
 fi
+
 git clone https://github.com/rufengsuixing/luci-app-autoipsetadder.git package/luci-app-autoipsetadder
 git clone https://github.com/mchome/openwrt-dogcom.git package/openwrt-dogcom
 git clone https://github.com/garypang13/luci-app-bypass package/luci-app-bypass
@@ -57,8 +59,10 @@ svn co https://github.com/fw876/helloworld/trunk/xray-core package/xray-core
 svn co https://github.com/fw876/helloworld/trunk/xray-plugin package/xray-plugin
 svn co https://github.com/fw876/helloworld/trunk/shadowsocks-rust package/shadowsocks-rust
 svn co https://github.com/fw876/helloworld/trunk/v2ray-plugin package/v2ray-plugin
-svn co https://github.com/ophub/luci-app-amlogic/trunk/luci-app-amlogic package/luci-app-amlogic
 svn co https://github.com/fw876/helloworld/trunk/shadowsocksr-libev package/shadowsocksr-libev
+#晶晨盒子
+svn co https://github.com/ophub/luci-app-amlogic/trunk/luci-app-amlogic package/luci-app-amlogic
+
 #svn co https://github.com/xiaorouji/openwrt-passwall/trunk/xray-core package/xray-core
 #svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-app-gost package/luci-app-gost
 #svn co https://github.com/kenzok8/openwrt-packages/trunk/gost package/gost
