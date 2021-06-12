@@ -110,28 +110,55 @@ jobs:
         if [ $count -gt 0 ] ; then
             cp -r *.xz ${UPLOAD}/
         fi
-        echo "::set-output name=status::success"       
-
+        echo "::set-output name=status::success"    
+        
+    - name: Create Firmware Release
+      if: steps.compile.outputs.status == 'success' && env.RELEASE == 'true' && !cancelled()
+      uses: ncipollo/release-action@v1
+      with:
+        name: ${{ env.DATE }} 🚀 / N1-Openwrt | 编译
+        allowUpdates: true
+        tag: ${{ env.tag_name }}
+        commit: master
+        token: ${{ secrets.RELEASES_TOKEN  }}
+        artifacts:  ${{ env.UPLOAD }}/*
+        
     - name: Package OpenWrt with flippy script
       uses: doctor-design/package-flippy-openwrt@main
+      id: package
       with:
         types: s905d
         openwrt-version: R21.6.1
         whoami: doctor
         out: ${{ env.UPLOAD }}
+#       openwrt-path: openwrt/bin/targets/*/*
         openwrt-path: $GITHUB_WORKSPACE/openwrt/bin/targets/*/*
    
     - name: Create release
-      if: steps.compile.outputs.status == 'success' && env.RELEASE == 'true' && !cancelled()
+      if: steps.package.outputs.status == 'true' && env.RELEASE == 'true' && !cancelled()
       uses: ncipollo/release-action@v1
       with:
-        name: ${{ env.DATE }} / N1-Openwrt | 编译
+        name: ${{ env.DATE }} 🚀 / N1-Openwrt | 编译
         allowUpdates: true
         tag: ${{ env.tag_name }}
         commit: master
         token: ${{ secrets.RELEASES_TOKEN }}
         body: |
-          当前使用版本:（编译前的最后一次源码更新记录）
+          默认IP：192.168.2.5 默认密码： password
+          全新刷入emmc方法：
+             1. 固件刷入U盘。
+             2. cd root
+             3. ./install-to-emmc.sh
+             4. 拔掉U盘，断电重启。
+             
+          在线升级方法：
+             1. 上传 img 到/mnt/mmcblk2p4
+             2. cd /mnt/mmcblk2p4
+             3. 升级脚本下载 update-amlogic-openwrt.sh
+             4. chmod +x update-amlogic-openwrt.sh
+             5. gzip -d  *.img.gz
+             6. ./update-amlogic-openwrt.sh xxxx.img
+
           ${{ env.useVersionInfo }}
         artifacts:  ${{ env.UPLOAD }}/*
         
