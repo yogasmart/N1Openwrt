@@ -23,7 +23,8 @@ on:
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
-  CONFIG_FILE: plus.config
+  N1_VER: puls
+  CONFIG_FILE: $N1_VER.config
   DIY_SH: diy.sh
   TZ: Asia/Shanghai
   RELEASE: true
@@ -102,7 +103,7 @@ jobs:
         
         make -j$(nproc) || make -j1 || make -j1 V=s
         
-        cp .config ${UPLOAD}/plus.config
+        cp .config ${UPLOAD}/${N1_VER}.config
         cd bin/targets/*/*
         cp openwrt-armvirt-64-default-rootfs.tar.gz  ${UPLOAD}/openwrt-armvirt-64-default-rootfs.tar.gz
         count=` find -name '*.xz' | wc -l `
@@ -119,12 +120,13 @@ jobs:
         whoami: doctor
         out: ${{ env.UPLOAD }}
         openwrt-path: $GITHUB_WORKSPACE/openwrt/bin/targets/*/*
+        sub-name: ${{env.N1_VER}}
    
     - name: Create release
       if: steps.compile.outputs.status == 'success' && env.RELEASE == 'true' && !cancelled()
       uses: ncipollo/release-action@v1
       with:
-        name: ${{ env.DATE }} / N1-Openwrt | 编译
+        name: ${{ env.DATE }} / N1-Openwrt-${N1_VER} | 编译
         allowUpdates: true
         tag: ${{ env.tag_name }}
         commit: master
