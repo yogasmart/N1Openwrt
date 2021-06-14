@@ -23,8 +23,8 @@ on:
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
-  N1_VER: puls
-  CONFIG_FILE: puls.config
+  N1_VER: plus
+  CONFIG_FILE: plus.config
   DIY_SH: diy.sh
   TZ: Asia/Shanghai
   RELEASE: true
