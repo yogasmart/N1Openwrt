@@ -116,7 +116,7 @@ jobs:
       if: steps.compile.outputs.status == 'success' && env.RELEASE == 'true' && !cancelled()
       uses: ncipollo/release-action@v1
       with:
-        name: ${{ env.DATE }} 🚀 / N1-Openwrt | 编译
+        name: ${{ env.DATE }} 🚀 / N1-Openwrt-mini | 编译
         allowUpdates: true
         tag: ${{ env.tag_name }}
         commit: master
@@ -133,12 +133,13 @@ jobs:
         out: ${{ env.UPLOAD }}
 #       openwrt-path: openwrt/bin/targets/*/*
         openwrt-path: $GITHUB_WORKSPACE/openwrt/bin/targets/*/*
+        sub-name: mini
    
     - name: Create release
       if: steps.package.outputs.status == 'true' && env.RELEASE == 'true' && !cancelled()
       uses: ncipollo/release-action@v1
       with:
-        name: ${{ env.DATE }} 🚀 / N1-Openwrt | 编译
+        name: ${{ env.DATE }} 🚀 / N1-Openwrt-mini | 编译
         allowUpdates: true
         tag: ${{ env.tag_name }}
         commit: master
