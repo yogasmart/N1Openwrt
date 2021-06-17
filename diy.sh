@@ -29,10 +29,6 @@ git clone https://github.com/kongfl888/luci-app-adguardhome.git package/luci-app
 # Docker
 #svn co https://github.com/lisaac/luci-app-dockerman/trunk/applications/luci-app-dockerman package/luci-app-dockerman
 #git clone --depth=1 https://github.com/lisaac/luci-lib-docker  package/luci-lib-docker
-#if [ -e feeds/packages/utils/docker-ce ];then
-	sed -i '/dockerd/d' package/luci-app-dockerman/Makefile
-	sed -i 's/+docker/+docker-ce/g' package/luci-app-dockerman/Makefile
-#fi
 
 git clone https://github.com/rufengsuixing/luci-app-autoipsetadder.git package/luci-app-autoipsetadder
 git clone https://github.com/mchome/openwrt-dogcom.git package/openwrt-dogcom
