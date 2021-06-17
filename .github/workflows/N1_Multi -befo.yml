@@ -31,7 +31,7 @@ jobs:
       run:  echo "::set-output name=tagnamg::$(date +%Y%m%d%H)"
  
   buildopenwrtjob:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     name: Build ${{ matrix.sub_version }} 
     strategy:
       fail-fast: false
