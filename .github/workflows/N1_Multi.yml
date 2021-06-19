@@ -161,6 +161,7 @@ jobs:
              4. chmod +x update-amlogic-openwrt.sh
              5. gzip -d  *.img.gz
              6. ./update-amlogic-openwrt.sh xxxx.img
+
           ${{ env.useVersionInfo }}
         artifacts:  ${{ env.UPLOAD }}/*
 
