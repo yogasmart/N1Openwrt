@@ -15,7 +15,7 @@ rm -rf package/lean/luci-app-dockerman
 rm -rf package/lean/luci-lib-docker
 rm -rf package/lean/luci-app-wrtbwmon
 rm -rf package/lean/luci-theme-argon
-#rm -rf feeds/packages/net/smartdns
+rm -rf feeds/packages/net/smartdns
 
 
 
