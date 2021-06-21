@@ -12,7 +12,7 @@
 sed -i 's/192.168.1.1/192.168.2.5/g' package/base-files/files/bin/config_generate
 #移除不用软件包
 rm -rf package/lean/luci-app-dockerman
-#rm -rf package/lean/luci-lib-docker
+rm -rf package/lean/luci-lib-docker
 rm -rf package/lean/luci-app-wrtbwmon
 rm -rf package/lean/luci-theme-argon
 rm -rf feeds/packages/net/smartdns
@@ -28,12 +28,12 @@ git clone https://github.com/jerrykuku/luci-app-vssr.git package/luci-app-vssr
 git clone https://github.com/kongfl888/luci-app-adguardhome.git package/luci-app-adguardhome
 git clone https://github.com/lisaac/luci-app-dockerman.git package/luci-app-dockerman
 # Docker
-#svn co https://github.com/lisaac/luci-app-dockerman/trunk/applications/luci-app-dockerman package/luci-app-dockerman
-#git clone --depth=1 https://github.com/lisaac/luci-lib-docker package/luci-lib-docker
-#if [ -e feeds/packages/utils/docker-ce ];then
-#	sed -i '/dockerd/d' package/luci-app-dockerman/Makefile
-#	sed -i 's/+docker/+docker-ce/g' package/luci-app-dockerman/Makefile
-#fi
+svn co https://github.com/lisaac/luci-app-dockerman/trunk/applications/luci-app-dockerman package/luci-app-dockerman
+git clone --depth=1 https://github.com/lisaac/luci-lib-docker package/luci-lib-docker
+if [ -e feeds/packages/utils/docker-ce ];then
+	sed -i '/dockerd/d' package/luci-app-dockerman/Makefile
+	sed -i 's/+docker/+docker-ce/g' package/luci-app-dockerman/Makefile
+fi
 
 git clone https://github.com/rufengsuixing/luci-app-autoipsetadder.git package/luci-app-autoipsetadder
 git clone https://github.com/mchome/openwrt-dogcom.git package/openwrt-dogcom
