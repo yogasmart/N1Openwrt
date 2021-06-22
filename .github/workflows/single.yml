@@ -130,7 +130,6 @@ jobs:
       with:
         types: s905d
         openwrt-version: R21.6.14
-        kernel-version: 5.4.127-flippy-61-o,5.12.12-flippy-61
         whoami: doctor
         out: ${{ env.UPLOAD }}
 #       openwrt-path: openwrt/bin/targets/*/*
